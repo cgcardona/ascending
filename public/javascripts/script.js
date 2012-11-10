@@ -2,12 +2,17 @@ $(document).ready(function(){
   'use strict';
 
   var Ascend = (function(){
-    function Ascend(range){
-      this.range = range;
+    function Ascend(){
+      for(var itr = 1; itr < 1000; itr = itr + 10)
+      {
+        this.createCanvas(itr.toString());
+        this.drawLines();
+      }
     }
 
-    Ascend.prototype.createCanvas = function()
+    Ascend.prototype.createCanvas = function(range)
     {
+      this.range = range;
       var canvas = document.getElementById("canvas");
       this.ctx = canvas.getContext("2d");
       this.ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -27,14 +32,14 @@ $(document).ready(function(){
 
       for(var i = this.range; i <= 1000; i = i + this.range)
       {
-        minX = minX + this.range;
+        minX = minX + parseInt(this.range,10);
         this.ctx.lineTo(minX,maxY);
-        maxY = maxY - this.range;
+        maxY = maxY - parseInt(this.range,10);
         this.ctx.lineTo(maxX,maxY);
-        maxX = maxX - this.range;
+        maxX = maxX - parseInt(this.range,10);
         this.ctx.lineTo(maxX,minY);
-        minY = minY + this.range;
-        this.ctx.lineTo(minX,minY);
+        minY = minY + parseInt(this.range,10);
+        this.ctx.lineTo(0,minY);
       }
 
       this.ctx.stroke();
@@ -43,17 +48,6 @@ $(document).ready(function(){
     return Ascend;
   })();
 
-  var ascend = new Ascend(5);
-  console.log(10000);
-  console.log('10000');
-  ascend.createCanvas();
-  ascend.drawLines();
-  for(var itr = 1; itr < 1000; itr = itr + 5)
-  {
-    console.log(itr);
-    var ascend = new Ascend(itr.toString());
-    ascend.createCanvas();
-    ascend.drawLines();
-  }
+  var ascend = new Ascend();
 
 });
