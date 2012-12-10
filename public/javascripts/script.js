@@ -3,19 +3,32 @@ $(document).ready(function(){
 
   var Ascend = (function(){
     function Ascend(){
-      for(var itr = 1; itr < 1000; itr = itr + 10)
-      {
-        this.createCanvas(itr.toString());
-        this.drawLines();
+      this.canvas = document.getElementById("canvas");
+      this.ctx = this.canvas.getContext("2d");
+
+      var itr = 1;
+
+      var that = this;
+      function animationLoop () {           
+        setTimeout(function () {    
+          that.createCanvas(itr.toString());
+          that.drawLines();
+          itr = itr + 10;               
+          if (itr < 1000) {
+            animationLoop();  
+          }
+          setTimeout();
+        }, 25)
       }
+
+      animationLoop(); 
+
     }
 
     Ascend.prototype.createCanvas = function(range)
     {
       this.range = range;
-      var canvas = document.getElementById("canvas");
-      this.ctx = canvas.getContext("2d");
-      this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.ctx.fillStyle="#000";
       this.ctx.strokeStyle="#fff";
       this.ctx.fillRect(0,0,1000,1000);
